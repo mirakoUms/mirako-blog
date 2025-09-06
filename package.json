@@ -1,0 +1,25 @@
+{
+  "name": "mirako-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mirakoUms/mirako-blog.git"
+  },
+  "keywords": [
+    "blgo"
+  ],
+  "author": "mirako",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mirakoUms/mirako-blog/issues"
+  },
+  "homepage": "https://github.com/mirakoUms/mirako-blog#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
