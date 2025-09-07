@@ -38,6 +38,46 @@ const viewPostModel = {
       throw error;
     }
   },
+  async getPostById(postId) {
+    const sql = `SELECT
+                    p.id,
+                    u.username,
+                    p.title,
+                    p.content,
+                    p.summary,
+                    p.thumbnail_url,
+                    c.name AS category_name,
+                    STRING_AGG(t.name, ', ') AS tag_names,
+                    p.status,
+                    p.views_count,
+                    p.likes_count,
+                    p.comments_count,
+                    p.is_featured,
+                    p.created_at,
+                    p.updated_at
+                FROM
+                    posts p
+                LEFT JOIN 
+                    users u ON p.user_id = u.id
+                LEFT JOIN
+                    categories c ON p.category_id = c.id
+                LEFT JOIN 
+                    post_tags pt ON p.id = pt.post_id
+                LEFT JOIN
+                    tags t ON pt.tag_id = t.id
+                WHERE
+                    p.id = $1
+                GROUP BY
+                    p.id, u.username, c.name;`;
+    const values = [postId];
+    try {
+      const results = await query(sql, values);
+      return results.rows[0];
+    } catch (error) {
+      console.error("error occurred", error);
+      throw error;
+    }
+  },
 };
 
 module.exports = viewPostModel;

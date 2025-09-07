@@ -11,5 +11,6 @@ const router = express.Router();
  * @date 2025-07-09
  */
 router.get('/all', viewPostController.getAllPosts);
+router.get('/:id', viewPostController.getPostById);
 
 module.exports = router;

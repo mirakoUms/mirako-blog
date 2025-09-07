@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // --- CORS Configuration ---
-const whitelist = ['http://localhost:5173', 'http://localhost:3000'];
+const whitelist = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080'];
 const corsOptions = {
   origin: (origin, callback) => {
     if (whitelist.includes(origin) || !origin) {
