@@ -1,11 +1,11 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    user: process.env.user || 'mirako',
-    host: process.env.PGHOST || 'localhost',
-    database: process.env.PGDATABASE || 'post',
-    password: process.env.PGPASSWORD || 'korami',
-    port: process.env.PGPORT || 5432,
+    user: process.env.PGUSER,
+    host: process.env.PGHOST,
+    database: process.env.PGDATABASE,
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT,
 });
 
 pool.on('connect', () => {
