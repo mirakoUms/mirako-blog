@@ -4,10 +4,8 @@ const UserModel = {
     const sql = "SELECT u.id, u.username, u.email FROM users u WHERE u.id = $1";
     try {
       const result = await query(sql, [id]);
-      console.log(result);
       return result.rows[0];
     } catch (error) {
-      console.error(error);
       throw new Error("Error fetching user by ID");
     }
   },
@@ -19,7 +17,6 @@ const UserModel = {
       const result = await query(sql, [username]);
       return result.rows[0];
     } catch (error) {
-      console.error(error);
       throw new Error("Error fetching user by username");
     }
   },
@@ -30,7 +27,6 @@ const UserModel = {
       const result = await query(sql, [username, hashedPassword, email]);
       return result.rows[0];
     } catch (error) {
-      console.error(error);
       throw new Error("Error creating user");
     }
   },
