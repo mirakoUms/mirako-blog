@@ -1,5 +1,11 @@
 const { query } = require("../../config/dbConfig");
 
+/**
+ * View Post Model
+ * @description Model for post-related database operations
+ * @author Mirako
+ * @date 2025-09-07
+ */
 const viewPostModel = {
   async getAllPosts() {
     const sql = `SELECT

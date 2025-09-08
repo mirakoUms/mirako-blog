@@ -8,7 +8,7 @@ const router = express.Router();
  * @description Routes for viewing posts
  * @route GET api/posts/all
  * @author Mirako
- * @date 2025-07-09
+ * @date 2025-09-07
  */
 router.get('/all', viewPostController.getAllPosts);
 router.get('/:id', viewPostController.getPostById);

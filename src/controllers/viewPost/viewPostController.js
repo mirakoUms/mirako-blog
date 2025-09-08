@@ -1,5 +1,11 @@
 const viewPostModel = require("../../modules/viewPost/viewPost");
 
+/**
+ * View Post Controller
+ * @description Handles post-related HTTP requests
+ * @author Mirako
+ * @date 2024-09-07
+ */
 const viewPostController = {
   async getAllPosts(req, res) {
     try {

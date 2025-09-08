@@ -1,6 +1,7 @@
 const UserModel = require("../../modules/user/userModel");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../../utils/jwt");
+
 /**
  * User Controller
  * @description Handles user-related HTTP requests
@@ -48,7 +49,7 @@ const UserController = {
       }
       // compare successful generate JWT
       const token = generateToken({ id: user.id, username: user.username });
-      return res.status(200).json({ message: "Login successful", token });
+      return res.status(200).json({ message: "Login successful", token, id: user.id });
     } catch (err) {
       return res
         .status(500)
