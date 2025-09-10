@@ -336,3 +336,149 @@ const viewPostModel = {
 };
 
 module.exports = viewPostModel;
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.get()
+router.post()
+router.delete()
+router.put()
+router.patch()
+
+
+
+
+
+
+
+// changePost
+router.post('/new', ChangePostController.createPost());
+router.delete('/delete/:id', ChangePostController.deletePost());
+router.patch('/edit-info-part/:id', ChangePostController.editPostInfoPart());
+// router.put('/edit-info-full/:id', ChangePostController.editPostInfoFull());
+router.patch('/save/:id', ChangePostController.savePost());
+// router.patch('/upload/:id', ChangePostController.uploadPost());
+
+
+
+
+
+
+
+
+
+
+
+
+
+//changePost
+async createPost(req, res) { 
+  const {a, b, c, ..., } = req.body;
+  try {
+    const result = await viewPostModel.createPost(a, b, c, ..., ); 
+    return res 
+      .status(200) 
+      .json({ message: "Post created successfully", data: result }); 
+  } catch (error) { 
+    return res.status(500).json({ error: "Internal server error" }); 
+  } 
+}, 
+async deletePost(req, res) { 
+  const delId = req.param.id;
+  try {
+    const result = await viewPostModel.deletePost(id); 
+    return res 
+      .status(200) 
+      .json({ message: "Post deleted successfully", data: result }); 
+  } catch (error) { 
+    return res.status(500).json({ error: "Internal server error" }); 
+  } 
+}, 
+async editInfo(req, res) { 
+  const { a, b, c, ..., } = req.body;
+  try {
+    const result = await viewPostModel.editInfo(a, b, c, ..., ); 
+    return res 
+      .status(200) 
+      .json({ message: "Post Info edited successfully", data: result }); 
+  } catch (error) { 
+    return res.status(500).json({ error: "Internal server error" }); 
+  } 
+}, 
+async save(req, res) { 
+  const { id, content } = req.body;
+  try {
+    const result = await viewPostModel.save(id, content); 
+    return res 
+      .status(200) 
+      .json({ message: "Post content saved successfully", data: result }); 
+  } catch (error) { 
+    return res.status(500).json({ error: "Internal server error" }); 
+  } 
+}, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//changePost
+async createPost(a, b, c, ..., ) { 
+  const sql = '';
+  const values = [a, b, c, ..., ];
+  try { 
+    const results = await query(sql, values); 
+    return results; 
+  } catch (error) { 
+    throw error; 
+  } 
+}, 
+async deletePost(delId) {
+  // const sql = 'UPDATE posts SET deleted = '1' WHERE id IN ($1)';
+  const sql = 'DELETE FROM posts WHERE id IN ($1)';
+  const values = [delId];
+  try { 
+    const results = await query(sql, values); 
+    return results; 
+  } catch (error) { 
+    throw error; 
+  } 
+}, 
+async editInfo(a, b, c, ..., ) { 
+  const sql = '';
+  const values = [a, b, c, ..., ];
+  try { 
+    const results = await query(sql, values); 
+    return results; 
+  } catch (error) { 
+    throw error; 
+  } 
+}, 
+async save(id, content) { 
+  const sql = 'UPDATE posts SET content = $1 Where id = $2 AND content is DISTINT FROM $1';
+  const values = [id, content];
+  try { 
+    const results = await query(sql, values); 
+    return results; 
+  } catch (error) { 
+    throw error; 
+  } 
+}, 
