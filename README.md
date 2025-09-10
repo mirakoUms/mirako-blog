@@ -482,3 +482,122 @@ async save(id, content) {
     throw error; 
   } 
 }, 
+
+
+
+// changeCategory
+router.post('/new', ChangeCategoryController.createCategory());
+router.delete('/delete', ChangeCategoryController.deleteCategory());
+router.patch('/edit-category-part', ChangeCategoryController.editCategoryPart());
+// router.put()
+router.get('list', ChangeCategoryController.getCategoryList());
+
+// tag
+router.post('/new', ChangeTagController.createTag());
+router.delete('/delete', ChangeTagController.deleteTag());
+router.get('/list', ChangTagController.getTagList());
+
+
+
+
+
+
+
+
+
+//changePost
+async createCategory(req, res) { 
+  const {a, b, c, ..., } = req.body;
+  try {
+    const result = await viewPostModel.createCategory(a, b, c, ..., ); 
+    return res 
+      .status(200) 
+      .json({ message: "Post created successfully", data: result }); 
+  } catch (error) { 
+    return res.status(500).json({ error: "Internal server error" }); 
+  } 
+}, 
+async deleteCategory(req, res) { 
+  const delId = req.body;
+  try {
+    const result = await viewPostModel.deleteCategory(delId); 
+    return res 
+      .status(200) 
+      .json({ message: "Post created successfully", data: result }); 
+  } catch (error) { 
+    return res.status(500).json({ error: "Internal server error" }); 
+  } 
+}, 
+async editCategoryPart(req, res) { 
+  const {a, b, c, ..., } = req.body;
+  try {
+    const result = await viewPostModel.createCategory(a, b, c, ..., ); 
+    return res 
+      .status(200) 
+      .json({ message: "Post created successfully", data: result }); 
+  } catch (error) { 
+    return res.status(500).json({ error: "Internal server error" }); 
+  } 
+}, 
+async getCategoryList(req, res) { 
+  try {
+    const result = await viewPostModel.getCategoryList(); 
+    return res 
+      .status(200) 
+      .json({ message: "Post created successfully", data: result }); 
+  } catch (error) { 
+    return res.status(500).json({ error: "Internal server error" }); 
+  } 
+},
+
+
+
+
+
+
+
+
+
+
+
+
+//changePost
+async createCategory(a, b, c, ..., ) { 
+  const sql = '';
+  const values = [a, b, c, ..., ];
+  try { 
+    const results = await query(sql, values); 
+    return results; 
+  } catch (error) { 
+    throw error; 
+  } 
+}, 
+async createCategory(delId) { 
+  const sql = 'DELETE FROM posts WHERE id = $1';
+  const values = [delId];
+  try { 
+    const results = await query(sql, values); 
+    return results; 
+  } catch (error) { 
+    throw error; 
+  } 
+}, 
+async editCategoryPart(a, b, c, ..., ) { 
+  const sql = '';
+  const values = [a, b, c, ..., ];
+  try { 
+    const results = await query(sql, values); 
+    return results; 
+  } catch (error) { 
+    throw error; 
+  } 
+}, 
+async getCategoryList() { 
+  const sql = '';
+  try { 
+    const results = await query(sql); 
+    return results; 
+  } catch (error) { 
+    throw error; 
+  } 
+}, 
