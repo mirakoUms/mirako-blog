@@ -5,12 +5,12 @@ const UserController = require("../../controllers/user/userController");
 const router = express.Router();
 
 /**
- * Get User Profile
- * @route GET api/me
+ * Post User Profile
+ * @route Post api/me
  * @description fetch current user's profile
  * @author mirako
  * @date 2025-09-07
  */
-router.get("/", authenticateToken, UserController.getUserProfile);
+router.post("/", authenticateToken, UserController.getUserProfile);
 
 module.exports = router;

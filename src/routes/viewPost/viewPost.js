@@ -10,7 +10,9 @@ const router = express.Router();
  * @author Mirako
  * @date 2025-09-07
  */
+router.get('/count', viewPostController.getPostCount);
 router.get('/all', viewPostController.getAllPosts);
+router.get('/', viewPostController.getPaginatedPosts);
 router.get('/:id', viewPostController.getPostById);
 
 module.exports = router;

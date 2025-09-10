@@ -41,15 +41,15 @@ const UserController = {
       }
       const user = await UserModel.getUserByUsername(username);
       if (!user) {
-        return res.status(400).json({ message: "Invalid credentials" });
+        return res.status(404).json({ message: "Invalid credentials" });
       }
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ message: "Invalid credentials" });
+        return res.status(401).json({ message: "unmatched credentials" });
       }
       // compare successful generate JWT
       const token = generateToken({ id: user.id, username: user.username });
-      return res.status(200).json({ message: "Login successful", token, id: user.id });
+      return res.status(200).json({ message: "Login successful", token, userId: user.id });
     } catch (err) {
       return res
         .status(500)
