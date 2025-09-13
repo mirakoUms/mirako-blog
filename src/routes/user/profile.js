@@ -11,6 +11,6 @@ const router = express.Router();
  * @author mirako
  * @date 2025-09-07
  */
-router.post("/", authenticateToken, UserController.getUserProfile);
+router.get("/", authenticateToken, UserController.getUserProfile);
 
 module.exports = router;

@@ -22,6 +22,7 @@ const CategoryController = {
       if (!posts || posts.length === 0) {
         return res.status(404).json({ message: "No posts found." });
       }
+      
       return res.status(200).json({
         message: `Posts categorized as ${categoryName} retrieved successfully`,
         data: posts

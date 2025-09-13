@@ -16,10 +16,15 @@ const tagController = {
       limit = Math.max(1, parseInt(limit, 10) || 1);
 
       const offset = (page - 1) * limit;
-     
+
       const posts = await tagModule.getPostByTag(tagName, limit, offset);
+
+      if (!posts || posts.length === 0) {
+        return res.status(404).json({ message: "No posts found." });
+      }
+
       return res.status(200).json({
-        message: `Posts taged ${ tagName } retrieved successfully`,
+        message: `Posts taged ${tagName} retrieved successfully`,
         data: posts,
       });
     } catch (error) {
