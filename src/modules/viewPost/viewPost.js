@@ -8,7 +8,7 @@ const { query } = require("../../config/dbConfig");
  */
 const viewPostModel = {
   async getPostCount() {
-    const sql = "select count(*) as count";
+    const sql = "select count(*) as count from posts";
     try {
       const results = await query(sql);
       return results;

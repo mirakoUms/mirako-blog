@@ -41,11 +41,11 @@ const UserController = {
       }
       const user = await UserModel.getUserByUsername(username);
       if (!user) {
-        return res.status(404).json({ message: "Invalid credentials" });
+        return res.status(401).json({ message: "Unmatched credentials" });
       }
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(401).json({ message: "unmatched credentials" });
+        return res.status(401).json({ message: "Unmatched credentials" });
       }
       // compare successful generate JWT
       const token = generateToken({ id: user.id, username: user.username });
