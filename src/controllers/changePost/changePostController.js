@@ -56,6 +56,18 @@ const changePostController = {
       return res.status(500).json({ error: "Internal server error" });
     }
   },
+  async save(req, res) {
+    try {
+      const id = req.params.id;
+      const content = req.body.content;
+      const result = await changePostModel.save(content, id);
+      return res
+        .status(200)
+        .json({ message: "Post content saved successfully", data: result });
+    } catch (error) {
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
 };
 
 module.exports = changePostController;

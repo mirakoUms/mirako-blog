@@ -1,3 +1,4 @@
+const e = require("express");
 const { query } = require("../../config/dbConfig");
 
 const changePostModel = {
@@ -24,12 +25,25 @@ const changePostModel = {
     }
   },
   async editInfo(title, summary, category_id, thumbnail_url, id) {
-    const sql = "UPDATE posts SET title=$1, summary=$2, category_id=$3, thumbnail_url=$4 WHERE id=$5";
+    const sql =
+      "UPDATE posts SET title=$1, summary=$2, category_id=$3, thumbnail_url=$4 WHERE id=$5";
     const values = [title, summary, category_id, thumbnail_url, id];
     try {
       const results = await query(sql, values);
       return results.rowCount;
     } catch (error) {
+      throw error;
+    }
+  },
+  async save(content, id) {
+    const sql =
+      "UPDATE posts SET content = $1 Where id = $2 AND content IS DISTINCT FROM $1";
+    const values = [content, id];
+    try {
+      const results = await query(sql, values);
+      return results.rowCount;
+    } catch (error) {
+        console.log(error)
       throw error;
     }
   },

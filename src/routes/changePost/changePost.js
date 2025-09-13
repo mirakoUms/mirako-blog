@@ -7,6 +7,6 @@ const router = express.Router();
 router.post('/new', authenticateToken, changePostController.createPost);
 router.delete('/delete/:id', changePostController.deletePost);
 router.put('/edit-info-part/:id', changePostController.editInfo);
-// router.patch('/save/:id', changePostController.savePost);
+router.patch('/save/:id', changePostController.save);
 
 module.exports = router
