@@ -23,6 +23,16 @@ const changePostModel = {
       throw error;
     }
   },
+  async editInfo(title, summary, category_id, thumbnail_url, id) {
+    const sql = "UPDATE posts SET title=$1, summary=$2, category_id=$3, thumbnail_url=$4 WHERE id=$5";
+    const values = [title, summary, category_id, thumbnail_url, id];
+    try {
+      const results = await query(sql, values);
+      return results.rowCount;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 module.exports = changePostModel;

@@ -23,17 +23,36 @@ const changePostController = {
     try {
       const id = req.params.id;
       const result = await changePostModel.deletePost(id);
-      if (result === 0) 
+      if (result === 0)
         return res.status(404).json({
-            message: "Post delete failed: no such post exist.",
-            rowCount: result,
-        })
+          message: "Post delete failed: no such post exist.",
+          rowCount: result,
+        });
       return res.status(200).json({
         message: "Posts deleted successfully",
         rowCount: result,
       });
     } catch (error) {
       console.log(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+  async editInfo(req, res) {
+    try {
+      const id = req.params.id;
+      const { title, summary, category_id, thumbnail_url } = req.body;
+      console.log(id, title, summary);
+      const result = await changePostModel.editInfo(
+        title,
+        summary,
+        category_id,
+        thumbnail_url,
+        id
+      );
+      return res
+        .status(200)
+        .json({ message: "Post Info edited successfully", rowCount: result });
+    } catch (error) {
       return res.status(500).json({ error: "Internal server error" });
     }
   },
