@@ -20,20 +20,18 @@ const authenticateToken = (req, res, next) => {
   }
 
   // 3. verify Token
-  verifyToken(token)
-    .then((decoded) => {
-      if (!decoded) {
-        // if token is invalid (expired or signature error), return 403 Forbidden
-        return res.status(403).json({ message: 'Authentication failed: Invalid token.' });
-      }
-      // Token is valid, attach decoded user info to req object
-      req.user = decoded;
-      next();
-    })
-    .catch((error) => {
-      // Return the specific error message to the frontend
-      return res.status(403).json({ message: `Authentication failed: ${error.message}` });
-    });
+  let decoded;
+  try {
+    decoded = verifyToken(token);
+  } catch (error) {
+    // Return the specific error message to the frontend
+    return res.status(403).json({ message: `Authentication failed: ${error.message}` });
+  }
+
+  if (!decoded) {
+    // if token is invalid (expired or signature error), return 403 Forbidden
+    return res.status(403).json({ message: 'Authentication failed: Invalid token.' });
+  }
 
   // 4. Token is valid, attach decoded user info to req object
   req.user = decoded;

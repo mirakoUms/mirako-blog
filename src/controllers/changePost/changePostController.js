@@ -3,7 +3,8 @@ const changePostModel = require("../../modules/changePost/changePost");
 const changePostController = {
   async createPost(req, res) {
     try {
-      const { user_id, title, summary, thumbnail_url } = req.body;
+      const user_id = req.user.id;
+      const { title, summary, thumbnail_url } = req.body;
       const result = await changePostModel.createPost(
         user_id,
         title,
