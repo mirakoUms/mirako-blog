@@ -41,6 +41,16 @@ const categoryModule = {
       throw error;
     }
   },
+
+  async getAllCategory() {
+    try {
+      const sql = "select * from categories";
+      const results = await query(sql);
+      return results.rows;
+    } catch (error) {
+      throw error;
+    }
+  }
 };
 
 module.exports = categoryModule;
