@@ -25,8 +25,19 @@ const changePostModel = {
     }
   },
   async editInfo(title, summary, category_id, thumbnail_url, id) {
-    const sql =
-      "UPDATE posts SET title=$1, summary=$2, category_id=$3, thumbnail_url=$4 WHERE id=$5";
+    const sql = `UPDATE posts
+                 SET title = $1,
+                     summary = $2,
+                     category_id = $3,
+                     thumbnail_url = $4
+                 WHERE id = $5
+                 AND (
+                     title IS DISTINCT FROM $1
+                     OR summary IS DISTINCT FROM $2
+                     OR category_id IS DISTINCT FROM $3
+                     OR thumbnail_url IS DISTINCT FROM $4
+                 );
+          `;
     const values = [title, summary, category_id, thumbnail_url, id];
     try {
       const results = await query(sql, values);
@@ -43,7 +54,7 @@ const changePostModel = {
       const results = await query(sql, values);
       return results.rowCount;
     } catch (error) {
-        console.log(error)
+      console.log(error);
       throw error;
     }
   },

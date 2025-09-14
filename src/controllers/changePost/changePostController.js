@@ -41,7 +41,6 @@ const changePostController = {
     try {
       const id = req.params.id;
       const { title, summary, category_id, thumbnail_url } = req.body;
-      console.log(id, title, summary);
       const result = await changePostModel.editInfo(
         title,
         summary,
@@ -51,9 +50,9 @@ const changePostController = {
       );
       return res
         .status(200)
-        .json({ message: "Post Info edited successfully", rowCount: result });
+        .json({ message: "Post Info edited successfully", data: result });
     } catch (error) {
-      return res.status(500).json({ error: "Internal server error" });
+      return res.status(500).json({ error: "Internal server error", errorInfo: error });
     }
   },
   async save(req, res) {
