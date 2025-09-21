@@ -60,7 +60,6 @@ const CategoryController = {
       }
 
       const rowCount = await categoryModule.createCategory(name);
-      console.log(rowCount);
 
       if (rowCount === 0) {
         return res.status(409).json({
