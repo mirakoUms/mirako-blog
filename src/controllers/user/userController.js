@@ -2,12 +2,6 @@ const UserModel = require("../../modules/user/userModel");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../../utils/jwt");
 
-/**
- * User Controller
- * @description Handles user-related HTTP requests
- * @author Mirako
- * @date 2024-09-07
- */
 const UserController = {
   async registerUser(req, res) {
     try {
