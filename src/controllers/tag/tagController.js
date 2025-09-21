@@ -12,7 +12,7 @@ const tagController = {
       return res.status(500).json({ error: "Internal server error" });
     }
   },
-  
+
   async getPostByTag(req, res) {
     try {
       if (!req.query || !req.query.page || !req.query.limit) {
@@ -38,6 +38,28 @@ const tagController = {
       return res.status(200).json({
         message: `Posts taged ${tagName} retrieved successfully`,
         data: posts,
+      });
+    } catch (error) {
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+
+  async createTag(req, res) {
+    try {
+      const { name } = req.body;
+      if (!name) {
+        return res.status(400).json({ error: "Name is required." });
+      }
+      const rowCount = await tagModule.createTag(name);
+      if (rowCount === 0) {
+        return res.status(409).json({
+          message: "Tag already exists.",
+          data: rowCount,
+        });
+      }
+      return res.status(201).json({
+        message: "Tag created successfully.",
+        data: rowCount,
       });
     } catch (error) {
       return res.status(500).json({ error: "Internal server error" });

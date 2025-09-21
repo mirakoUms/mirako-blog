@@ -1,6 +1,6 @@
 const { query } = require("../../config/dbConfig");
 
-const categoryModule = {
+const tagModule = {
   async getAllPostsByTag() {
     const sql = `SELECT
                   t.id as tag_id,
@@ -60,6 +60,17 @@ const categoryModule = {
       throw error;
     }
   },
+  async createTag(name) {
+    const insertSql = `INSERT INTO tags (name)
+                      VALUES ($1)
+                      ON CONFLICT (name) DO NOTHING`;
+    try {
+      const res = await query(insertSql, [name]);
+      return res.rowCount;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
-module.exports = categoryModule;
+module.exports = tagModule;
