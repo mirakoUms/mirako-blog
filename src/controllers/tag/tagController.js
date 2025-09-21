@@ -1,6 +1,18 @@
 const tagModule = require("../../modules/tag/tagModule");
 
 const tagController = {
+  async getAllPostsByTag(req, res) {
+    try {
+      const tags = await tagModule.getAllPostsByTag();
+      return res.status(200).json({
+        message: "All posts retrieved successfully",
+        data: tags,
+      });
+    } catch (error) {
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+  
   async getPostByTag(req, res) {
     try {
       if (!req.query || !req.query.page || !req.query.limit) {

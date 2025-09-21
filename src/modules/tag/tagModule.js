@@ -1,7 +1,25 @@
 const { query } = require("../../config/dbConfig");
 
 const categoryModule = {
-  
+  async getAllPostsByTag() {
+    const sql = `SELECT
+                  t.id as tag_id,
+                  t.name AS tag_name,
+                  COUNT(pt.post_id) AS post_count
+                FROM
+                  tags t
+                LEFT JOIN
+                  post_tags pt ON t.id = pt.tag_id
+                GROUP BY
+                  t.id
+                HAVING COUNT(pt.post_id) <> 0`;
+    try {
+      const results = await query(sql);
+      return results.rows;
+    } catch (error) {
+      throw error;
+    }
+  },
   async getPostByTag(tagName, limit, offset) {
     const sql = `SELECT
                 p.id,

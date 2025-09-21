@@ -1,3 +1,4 @@
+const e = require("express");
 const categoryModule = require("../../modules/category/categoryModule");
 
 const CategoryController = {
@@ -49,6 +50,34 @@ const CategoryController = {
       return res.status(500).json({ error: "Internal server error" });
     }
   },
-};
+
+  async createCategory(req, res) {
+    try {
+      const { name } = req.body;
+
+      if (!name) {
+        return res.status(400).json({ error: "Name is required." });
+      }
+
+      const rowCount = await categoryModule.createCategory(name);
+      console.log(rowCount);
+
+      if (rowCount === 0) {
+        return res.status(409).json({
+          message: "Create category failed. Category may already exist.",
+          data: rowCount,
+        });
+      }
+
+      return res.status(201).json({
+        message: "Category created successfully",
+        data: rowCount,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
+}
 
 module.exports = CategoryController;

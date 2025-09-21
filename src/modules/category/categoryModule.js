@@ -44,12 +44,34 @@ const categoryModule = {
 
   async getAllCategory() {
     try {
-      const sql = "select * from categories";
+      const sql = `SELECT 
+	            c.id AS category_id, 
+	            c.name AS category_name, 
+	            COUNT(p.category_id) AS post_count
+            FROM 
+              categories c
+            LEFT JOIN 
+              posts p ON c.id=p.category_id
+            GROUP BY 
+              c.id`;
       const results = await query(sql);
       return results.rows;
     } catch (error) {
       throw error;
     }
+  },
+
+  async createCategory(name) {
+    try {
+      const sql = `INSERT INTO categories (name)
+                  VALUES ($1)
+                  ON CONFLICT (name) DO NOTHING`;
+      const values = [name];
+      const results = await query(sql, values);
+      return results.rowCount;
+    } catch (error) {
+      throw error;
+    } 
   }
 };
 
