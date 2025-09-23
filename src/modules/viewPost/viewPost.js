@@ -132,6 +132,17 @@ const viewPostModel = {
       throw error;
     }
   },
+  async checkIfPostExists(postId) {
+    const sql = "SELECT 1 FROM posts WHERE id = $1";
+    const values = [postId];
+    try {
+      const results = await query(sql, values);
+      return results.rows.length > 0;
+    } catch (error) {
+      console.error("error occurred", error);
+      throw error;
+    }
+  }
 };
 
 module.exports = viewPostModel;

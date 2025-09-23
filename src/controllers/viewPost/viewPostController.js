@@ -65,6 +65,17 @@ const viewPostController = {
       return res.status(500).json({ error: "Internal server error" });
     }
   },
+  async checkIfPostExists(req, res) {
+    try {
+      const postId = req.params.id;
+      const exists = await viewPostModel.checkIfPostExists(postId);
+      return res
+        .status(200)
+        .json({ message: "Post existence checked", exists });
+    } catch (error) {
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  },
 };
 
 module.exports = viewPostController;
