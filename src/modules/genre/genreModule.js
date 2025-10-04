@@ -1,7 +1,7 @@
 const { query } = require("../../config/dbConfig");
 
-const categoryModule = {
-  async getPostByCategory(categoryName, limit, offset) {
+const genreModule = {
+  async getPostByGenre(genreName, limit, offset) {
     const sql = `SELECT
                 p.id,
                 u.username,
@@ -33,7 +33,7 @@ const categoryModule = {
             ORDER BY
                 p.created_at DESC
             LIMIT $2 OFFSET $3`;
-    const values = [categoryName, limit, offset];
+    const values = [genreName, limit, offset];
     try {
       const results = await query(sql, values);
       return results.rows;
@@ -42,18 +42,18 @@ const categoryModule = {
     }
   },
 
-  async getAllCategory() {
+  async getAllGenres() {
     try {
       const sql = `SELECT 
-	            c.id AS category_id, 
-	            c.name AS category_name, 
-	            COUNT(p.category_id) AS post_count
+	            g.id AS genre_id, 
+	            g.genre_name AS genre_name, 
+	            COUNT(p.genre_id) AS post_count
             FROM 
-              categories c
+              genres g
             LEFT JOIN 
-              posts p ON c.id=p.category_id
+              posts p ON g.id=p.genre_id
             GROUP BY 
-              c.id`;
+              g.id`;
       const results = await query(sql);
       return results.rows;
     } catch (error) {
@@ -61,10 +61,10 @@ const categoryModule = {
     }
   },
 
-  async createCategory(name) {
+  async createGenre(name) {
     try {
-      const sql = `INSERT INTO categories (name)
-                  VALUES ($1)
+      const sql = `INSERT INTO genres (genre_name, genre_slug, genre_describtion)
+                  VALUES ($1, $2, $3)
                   ON CONFLICT (name) DO NOTHING`;
       const values = [name];
       const results = await query(sql, values);
@@ -75,4 +75,4 @@ const categoryModule = {
   }
 };
 
-module.exports = categoryModule;
+module.exports = genreModule;

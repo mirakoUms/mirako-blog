@@ -1,8 +1,8 @@
 const e = require("express");
-const categoryModule = require("../../modules/category/categoryModule");
+const genreModule = require("../../modules/genre/genreModule");
 
-const CategoryController = {
-  async getPostByCategory(req, res) {
+const genreController = {
+  async getPostBygenre(req, res) {
     try {
       if (!req.query || !req.query.page || !req.query.limit) {
         return res
@@ -10,7 +10,7 @@ const CategoryController = {
           .json({ error: "Page and limit parameters are required." });
       }
 
-      const categoryName = req.params.categoryName;
+      const genreName = req.params.genreName;
 
       let { page, limit } = req.query;
       page = Math.max(1, parseInt(page, 10) || 1);
@@ -18,8 +18,8 @@ const CategoryController = {
 
       const offset = (page - 1) * limit;
 
-      const posts = await categoryModule.getPostByCategory(
-        categoryName,
+      const posts = await genreModule.getPostBygenre(
+        genreName,
         limit,
         offset
       );
@@ -29,7 +29,7 @@ const CategoryController = {
       }
 
       return res.status(200).json({
-        message: `Posts categorized as ${categoryName} retrieved successfully`,
+        message: `Posts categorized as ${genreName} retrieved successfully`,
         data: posts,
       });
     } catch (error) {
@@ -38,12 +38,12 @@ const CategoryController = {
     }
   },
 
-  async getAllCategory(req, res) {
+  async getAllgenre(req, res) {
     try {
-      const categories = await categoryModule.getAllCategory();
+      const genres = await genreModule.getAllgenre();
       return res.status(200).json({
-        message: `Categories retrieved successfully`,
-        data: categories,
+        message: `genres retrieved successfully`,
+        data: genres,
       });
     } catch (error) {
       console.log(error);
@@ -51,7 +51,7 @@ const CategoryController = {
     }
   },
 
-  async createCategory(req, res) {
+  async creategenre(req, res) {
     try {
       const { name } = req.body;
 
@@ -59,17 +59,17 @@ const CategoryController = {
         return res.status(400).json({ error: "Name is required." });
       }
 
-      const rowCount = await categoryModule.createCategory(name);
+      const rowCount = await genreModule.creategenre(name);
 
       if (rowCount === 0) {
         return res.status(409).json({
-          message: "Create category failed. Category may already exist.",
+          message: "Create genre failed. genre may already exist.",
           data: rowCount,
         });
       }
 
       return res.status(201).json({
-        message: "Category created successfully",
+        message: "genre created successfully",
         data: rowCount,
       });
     } catch (error) {
@@ -79,4 +79,4 @@ const CategoryController = {
   },
 }
 
-module.exports = CategoryController;
+module.exports = genreController;
