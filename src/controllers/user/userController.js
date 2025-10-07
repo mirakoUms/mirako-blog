@@ -18,7 +18,7 @@ const UserController = {
       const hashedPassword = await bcrypt.hash(password, 10);
       await UserModel.createUser({ username, slug, hashedPassword, email });
       return res.status(201).json({ message: "Registration successful!" });
-    } catch (err) {
+    } catch (err) {      
       return res
         .status(500)
         .json({ message: "Server error", error: err.message });

@@ -1,9 +1,9 @@
 const tagModule = require("../../models/tag/tagModule");
 
 const tagController = {
-  async getAllPostsByTag(req, res) {
+  async getAllTags(req, res) {
     try {
-      const tags = await tagModule.getAllPostsByTag();
+      const tags = await tagModule.getAllTags();
       return res.status(200).json({
         message: "All posts retrieved successfully",
         data: tags,
@@ -21,7 +21,7 @@ const tagController = {
           .json({ error: "Page and limit parameters are required." });
       }
 
-      const tagName = req.params.tagName;
+      const tagId = req.params.tagId;
 
       let { page, limit } = req.query;
       page = Math.max(1, parseInt(page, 10) || 1);
@@ -29,14 +29,14 @@ const tagController = {
 
       const offset = (page - 1) * limit;
 
-      const posts = await tagModule.getPostByTag(tagName, limit, offset);
+      const posts = await tagModule.getPostByTag(tagId, limit, offset);
 
       if (!posts || posts.length === 0) {
         return res.status(404).json({ message: "No posts found." });
       }
 
       return res.status(200).json({
-        message: `Posts taged ${tagName} retrieved successfully`,
+        message: `Posts taged id: ${tagId} retrieved successfully`,
         data: posts,
       });
     } catch (error) {
@@ -46,11 +46,11 @@ const tagController = {
 
   async createTag(req, res) {
     try {
-      const { name } = req.body;
-      if (!name) {
-        return res.status(400).json({ error: "Name is required." });
+      const { name, slug, description } = req.body;
+      if (!name || !slug || !description) {
+        return res.status(400).json({ error: "Name, slug, description is required." });
       }
-      const rowCount = await tagModule.createTag(name);
+      const rowCount = await tagModule.createTag(name, slug, description);
       if (rowCount === 0) {
         return res.status(409).json({
           message: "Tag already exists.",
@@ -62,6 +62,7 @@ const tagController = {
         data: rowCount,
       });
     } catch (error) {
+      console.log(error)
       return res.status(500).json({ error: "Internal server error" });
     }
   },
