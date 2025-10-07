@@ -8,7 +8,7 @@ const { query } = require("../../config/dbConfig");
  */
 const UserModel = {
   async getUserById(id) {
-    const sql = "SELECT u.id, u.username, u.email FROM users u WHERE u.id = $1";
+    const sql = "SELECT u.id, u.username, u.slug, u.email FROM admins u WHERE u.id = $1";
     try {
       const result = await query(sql, [id]);
       return result.rows[0];
@@ -19,7 +19,7 @@ const UserModel = {
 
   async getUserByUsername(username) {
     const sql =
-      "SELECT u.id, u.username, u.password, u.email FROM users u WHERE u.username = $1";
+      "SELECT u.id, u.username, u.password, u.email FROM admins u WHERE u.username = $1";
     try {
       const result = await query(sql, [username]);
       return result.rows[0];
@@ -27,11 +27,11 @@ const UserModel = {
       throw new Error("Error fetching user by username");
     }
   },
-  async createUser({ username, hashedPassword, email }) {
+  async createUser({ username, slug, hashedPassword, email }) {
     const sql =
-      "INSERT INTO users (username, password, email) VALUES ($1, $2, $3)";
+      "INSERT INTO admins (username, slug, password, email) VALUES ($1, $2, $3, $4)";
     try {
-      const result = await query(sql, [username, hashedPassword, email]);
+      const result = await query(sql, [username, slug, hashedPassword, email]);
       return result.rows[0];
     } catch (error) {
       throw new Error("Error creating user");

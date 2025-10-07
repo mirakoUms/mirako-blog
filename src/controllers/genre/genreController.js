@@ -1,5 +1,5 @@
 const e = require("express");
-const genreModule = require("../../modules/genre/genreModule");
+const genreModule = require("../../models/genre/genreModule");
 
 const genreController = {
   async getPostBygenre(req, res) {

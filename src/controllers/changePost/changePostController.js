@@ -1,4 +1,4 @@
-const changePostModel = require("../../modules/changePost/changePost");
+const changePostModel = require("../../models/changePost/changePost");
 
 const changePostController = {
   async createPost(req, res) {

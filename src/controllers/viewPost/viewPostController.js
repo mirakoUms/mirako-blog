@@ -1,4 +1,4 @@
-const viewPostModel = require("../../modules/viewPost/viewPost");
+const viewPostModel = require("../../models/viewPost/viewPost");
 
 const viewPostController = {
   async getPostCount(req, res) {

@@ -1,11 +1,11 @@
-const UserModel = require("../../modules/user/userModel");
+const UserModel = require("../../models/user/userModel");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../../utils/jwt");
 
 const UserController = {
   async registerUser(req, res) {
     try {
-      const { username, password, email } = req.body;
+      const { username, slug, password, email } = req.body;
       if (!username || !password) {
         return res
           .status(400)
@@ -16,7 +16,7 @@ const UserController = {
         return res.status(400).json({ message: "Username already exists" });
       }
       const hashedPassword = await bcrypt.hash(password, 10);
-      await UserModel.createUser({ username, hashedPassword, email });
+      await UserModel.createUser({ username, slug, hashedPassword, email });
       return res.status(201).json({ message: "Registration successful!" });
     } catch (err) {
       return res

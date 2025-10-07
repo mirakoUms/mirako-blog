@@ -1,4 +1,4 @@
-const tagModule = require("../../modules/tag/tagModule");
+const tagModule = require("../../models/tag/tagModule");
 
 const tagController = {
   async getAllPostsByTag(req, res) {
