@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const { query } = require("../../config/dbConfig");
-const { log } = require("console");
 
 const sqlPath               = path.join(__dirname, "../../sqls", "tag/");
 const getAllTagsDir   = "getAllTags.sql";

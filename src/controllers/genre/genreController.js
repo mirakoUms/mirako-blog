@@ -18,7 +18,7 @@ const genreController = {
 
       const offset = (page - 1) * limit;
 
-      const posts = await genreModule.getPostBygenre(
+      const posts = await genreModule.getPostByGenre(
         genreName,
         limit,
         offset
@@ -40,7 +40,7 @@ const genreController = {
 
   async getAllgenre(req, res) {
     try {
-      const genres = await genreModule.getAllgenre();
+      const genres = await genreModule.getAllGenres();
       return res.status(200).json({
         message: `genres retrieved successfully`,
         data: genres,
@@ -53,13 +53,13 @@ const genreController = {
 
   async creategenre(req, res) {
     try {
-      const { name } = req.body;
+      const { genre_name, genre_slug, genre_description } = req.body;
 
-      if (!name) {
+      if (!genre_name || !genre_slug || !genre_description) {
         return res.status(400).json({ error: "Name is required." });
       }
 
-      const rowCount = await genreModule.creategenre(name);
+      const rowCount = await genreModule.createGenre(genre_name, genre_slug, genre_description);
 
       if (rowCount === 0) {
         return res.status(409).json({

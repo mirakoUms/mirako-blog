@@ -5,7 +5,7 @@ SELECT
     p.summary,
     p.thumbnail_url,
     g.genre_name,
-    COALESCE(
+        COALESCE(
         JSON_AGG(
             JSON_BUILD_OBJECT(
                 'id',
@@ -37,13 +37,12 @@ FROM
     LEFT JOIN post_tags pt ON p.id = pt.post_id
     LEFT JOIN tags t ON pt.tag_id = t.id
 WHERE
-    t.tag_slug = $1
+    g.genre_slug = $1
 GROUP BY
     p.id,
     a.username,
     g.genre_name,
-    t.tag_name,
-    t.tag_slug
+    g.genre_slug
 ORDER BY
     p.published_at DESC
 LIMIT
