@@ -50,13 +50,21 @@ const viewPostController = {
       return res.status(500).json({ error: "Internal server error" });
     }
   },
-  async getPostById(req, res) {
+  async getPostByKey(req, res) {
     try {
-      const postId = req.params.id;
-      const post = await viewPostModel.getPostById(postId);
+      const key = req.params.key;
+      let post;
+
+      if (/^\d+$/.test(key)) {
+        post = await viewPostModel.getPostById(key);
+      } else {
+        post = await viewPostModel.getPostBySlug(key);
+      }
+
       if (!post) {
         return res.status(404).json({ error: "Post not found" });
       }
+
       return res
         .status(200)
         .json({ message: "Post retrieved successfully", data: post });

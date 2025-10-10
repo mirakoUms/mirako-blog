@@ -2,10 +2,11 @@ SELECT
     p.id,
     a.username,
     p.title,
-    p.slug,
     p.summary,
+    p.slug,
+    p.content,
     p.thumbnail_url,
-    g.genre_name AS genre_name,
+    g.genre_name,
     COALESCE(
         JSON_AGG(
             JSON_BUILD_OBJECT(
@@ -37,11 +38,9 @@ FROM
     LEFT JOIN genres g ON p.genre_id = g.id
     LEFT JOIN post_tags pt ON p.id = pt.post_id
     LEFT JOIN tags t ON pt.tag_id = t.id
+WHERE
+    p.slug = $1
 GROUP BY
     p.id,
     a.username,
-    g.genre_name
-ORDER BY
-    p.published_at DESC
-LIMIT
-    $1 OFFSET $2
+    g.genre_name;

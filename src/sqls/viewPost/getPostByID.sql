@@ -2,6 +2,7 @@ SELECT
     p.id,
     a.username,
     p.title,
+    p.slug,
     p.summary,
     p.content,
     p.thumbnail_url,

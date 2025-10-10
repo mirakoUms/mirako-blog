@@ -2,6 +2,7 @@ SELECT
     p.id,
     a.username,
     p.title,
+    p.slug,
     p.summary,
     p.thumbnail_url,
     g.genre_name AS genre_name,

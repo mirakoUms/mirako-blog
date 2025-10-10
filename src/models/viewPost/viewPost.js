@@ -2,10 +2,11 @@ const fs = require("fs");
 const path = require("path");
 const { query } = require("../../config/dbConfig");
 
-const sqlPath               = path.join(__dirname, "../../sqls", "viewPost/");
-const getAllPostSqlDir      = "getAllPosts.sql";
-const getPaginatedPostsDir  = "getPaginatedPosts.sql";
-const getPostByIDDir        = "getPostByID.sql";
+const sqlPath = path.join(__dirname, "../../sqls", "viewPost/");
+const getAllPostSqlDir = "getAllPosts.sql";
+const getPaginatedPostsDir = "getPaginatedPosts.sql";
+const getPostByIDDir = "getPostByID.sql";
+const getPostBySlugDir = "getPostBySlug.sql";
 
 const viewPostModel = {
   async getPostCount() {
@@ -40,6 +41,17 @@ const viewPostModel = {
   async getPostById(postId) {
     const sql = fs.readFileSync(sqlPath + getPostByIDDir, "utf8");
     const values = [postId];
+    try {
+      const results = await query(sql, values);
+      return results.rows[0];
+    } catch (error) {
+      console.error("error occurred", error);
+      throw error;
+    }
+  },
+  async getPostBySlug(postSlug) {
+    const sql = fs.readFileSync(sqlPath + getPostBySlugDir, "utf8");
+    const values = [postSlug];
     try {
       const results = await query(sql, values);
       return results.rows[0];

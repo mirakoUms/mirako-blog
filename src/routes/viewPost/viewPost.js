@@ -6,7 +6,6 @@ const router = express.Router();
 router.get('/count', viewPostController.getPostCount);
 router.get('/all', viewPostController.getAllPosts);
 router.get('/', viewPostController.getPaginatedPosts);
-router.get('/:id', viewPostController.getPostById);
 router.get('/check-if-exists/:id', viewPostController.checkIfPostExists);
-
+router.get("/:key", viewPostController.getPostByKey);
 module.exports = router;
